@@ -13,5 +13,5 @@ def auth_view(response:Response, password: str =None , pass_hash= str=None):
     response.status_code=status.HTTP_401_UNAUTHORIZED
     if not(password and pass_hash):
         return 
-    if sha512(password and pass_hash):
+        if sha512(password.encode()).hexdigest() == password_hash:
         response.status_code=status.HTTP_204_NO_CONTENT
