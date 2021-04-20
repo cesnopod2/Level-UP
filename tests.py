@@ -1,17 +1,11 @@
-from fastapi import FastAPI,Request,Response,status
+from fastapi.testclient import TestClient
 
-from hashlib import sha512
+from main import app
 
-app=FastAPI()
+client = TestClient(app)
 
-@app.get("/")
-def root_view():
-    return {"message":{"Hello world!"}}
 
-@app.get("/auth")
-def auth_view(response:Response, password: str =None , pass_hash= str=None):
-    response.status_code=status.HTTP_401_UNAUTHORIZED
-    if not(password and pass_hash):
-        return 
-        if sha512(password.encode()).hexdigest() == password_hash:
-        response.status_code=status.HTTP_204_NO_CONTENT
+def test_read_main():
+    response = client.get("/")
+    assert response.status_code == 200
+    assert response.json() == {"message": "Hello World"}
