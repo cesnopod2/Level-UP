@@ -1,7 +1,9 @@
 from fastapi import FastAPI,Response,Request,status
-
 from hashlib import sha512
+
+
 app=FastAPI()
+
 @app.get("/") # dekorator
 def root():
     return {"message": "Hello world!"}
